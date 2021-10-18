@@ -1,8 +1,8 @@
 import RPi.GPIO as GPIO
-import time,os
+import time
 
 import datetime
-import urllib2
+
 
 TRIG = 6
 ECHO = 5
@@ -64,17 +64,16 @@ def get_distance():
 	dist=round(avg_dist,3)
 	return dist
 
-def sendData_to_remoteServer(url,dist):
-	url_full=url+str(dist)
+  
 	urllib.urlopen(url_full)
 	
 def low_level_warning(dist):
 	level=114-dist
 	if(level<40):
 		print("level low : ", level)
-		GPIO.output(LEDALARM, False)
+		GPIO.output(LEDALARM, True) # the led turns on if the tank is almost full 
 	else:
-		GPIO.output(LEDALARM, True)
+		GPIO.output(LEDALARM, False)
 		print("level ok")
 		
 
